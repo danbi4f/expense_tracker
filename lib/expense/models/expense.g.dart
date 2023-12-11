@@ -1,40 +1,37 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'expense_data_source.dart';
+part of 'expense.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ExpenseDataSourceAdapter extends TypeAdapter<ExpenseDataSource> {
+class ExpenseModelAdapter extends TypeAdapter<ExpenseModel> {
   @override
   final int typeId = 1;
 
   @override
-  ExpenseDataSource read(BinaryReader reader) {
+  ExpenseModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return ExpenseDataSource(
+    return ExpenseModel(
       name: fields[0] as String,
-      price: fields[1] as int,
-      category: fields[2] as Category,
-      date: fields[3] as DateTime?,
+      amount: fields[1] as double,
+      date: fields[2] as DateTime,
     );
   }
 
   @override
-  void write(BinaryWriter writer, ExpenseDataSource obj) {
+  void write(BinaryWriter writer, ExpenseModel obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
-      ..write(obj.price)
+      ..write(obj.amount)
       ..writeByte(2)
-      ..write(obj.category)
-      ..writeByte(3)
       ..write(obj.date);
   }
 
@@ -44,7 +41,7 @@ class ExpenseDataSourceAdapter extends TypeAdapter<ExpenseDataSource> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ExpenseDataSourceAdapter &&
+      other is ExpenseModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

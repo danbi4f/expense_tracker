@@ -1,5 +1,5 @@
 import 'package:expense_tracker/config/theme.dart';
-import 'package:expense_tracker/expense/data/datasource/expense_data_source.dart';
+import 'package:expense_tracker/expense/models/expense.dart';
 
 import 'package:expense_tracker/expense/page/expenses_page.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +10,8 @@ import 'boxes.dart';
 
 void main() async {
   await Hive.initFlutter();
-  Hive.registerAdapter(ExpenseDataSourceAdapter());
-  boxExpenses = await Hive.openBox<ExpenseDataSource>('expenseBox');
+  Hive.registerAdapter(ExpenseModelAdapter());
+  boxExpenses = await Hive.openBox<ExpenseModel>('expenseBox');
 
   runApp(const MainApp());
   
