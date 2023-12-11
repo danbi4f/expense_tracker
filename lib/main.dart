@@ -1,8 +1,20 @@
+import 'package:expense_tracker/config/theme.dart';
+import 'package:expense_tracker/expense/data/datasource/expense_data_source.dart';
+
 import 'package:expense_tracker/expense/page/expenses_page.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+import 'boxes.dart';
+
+
+void main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(ExpenseDataSourceAdapter());
+  boxExpenses = await Hive.openBox<ExpenseDataSource>('expenseBox');
+
   runApp(const MainApp());
+  
 }
 
 class MainApp extends StatelessWidget {
@@ -10,8 +22,10 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: ExpensesPage(),
-    );
+    return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: theme,
+          home: const ExpensesPage(),
+        );
   }
 }
