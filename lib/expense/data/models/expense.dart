@@ -16,7 +16,7 @@ const categoryIcons = {
 
 
 @HiveType(typeId: 1)
-class ExpenseModel {
+class ExpenseModel extends HiveObject{
   ExpenseModel({
     required this.name,
     required this.amount,

@@ -1,10 +1,16 @@
-import 'package:expense_tracker/boxes.dart';
-import 'package:expense_tracker/expense/models/expense.dart';
+import 'package:expense_tracker/expense/data/models/expense.dart';
+import 'package:expense_tracker/expense/presentation/bloc/expense_bloc.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
+  const NewExpense({
+    super.key,
+    required this.transaction,
+  });
+
+  final ExpenseModel transaction;
 
   @override
   State<NewExpense> createState() => _NewExpenseState();
@@ -59,17 +65,24 @@ class _NewExpenseState extends State<NewExpense> {
       );
       return;
     }
-    setState(() {
-      boxExpenses.put(
-        'key_${titleController.text}',
-        ExpenseModel(
-          name: titleController.text,
-          amount: enteredAmount,
-          //category: selectedCategory,
-          date: selectedDate!,
-        ),
-      );
-    });
+    context.read<ExpenseBloc>().add(UpdateSpecificData(
+        transaction: widget.transaction,
+        name: titleController.text,
+        amount: enteredAmount,
+        date: selectedDate!));
+    // setState(
+    //   () {
+    //     boxExpenses.put(
+    //       'key_${titleController.text}',
+    //       ExpenseModel(
+    //         name: titleController.text,
+    //         amount: enteredAmount,
+    //         //category: selectedCategory,
+    //         date: selectedDate!,
+    //       ),
+    //     );
+    //   },
+    // );
     Navigator.pop(context);
   }
 

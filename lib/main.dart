@@ -1,20 +1,16 @@
 import 'package:expense_tracker/config/theme.dart';
-import 'package:expense_tracker/expense/models/expense.dart';
+import 'package:expense_tracker/expense/data/models/expense.dart';
 
-import 'package:expense_tracker/expense/page/expenses_page.dart';
+import 'package:expense_tracker/expense/presentation/page/expenses_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
-import 'boxes.dart';
-
 
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ExpenseModelAdapter());
-  boxExpenses = await Hive.openBox<ExpenseModel>('expenseBox');
+  await Hive.openBox<ExpenseModel>('expenseBox');
 
   runApp(const MainApp());
-  
 }
 
 class MainApp extends StatelessWidget {
@@ -23,9 +19,9 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: theme,
-          home: const ExpensesPage(),
-        );
+      debugShowCheckedModeBanner: false,
+      theme: theme,
+      home: const ExpensesPage(),
+    );
   }
 }
