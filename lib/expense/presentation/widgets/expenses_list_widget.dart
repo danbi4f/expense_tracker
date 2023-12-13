@@ -1,25 +1,46 @@
-import 'package:expense_tracker/expense/presentation/widgets/expense_card_widget.dart';
+import 'package:expense_tracker/expense/presentation/bloc/expense_bloc.dart';
+import 'package:expense_tracker/expense/presentation/widgets/expense_item_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ExpensesListWidget extends StatelessWidget {
   const ExpensesListWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(5.0),
-        child: Card(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: ListView.builder(
-              itemCount: 1,
-              itemBuilder: (context, index) => const ExpenseItemWidget(),
+    return BlocBuilder<ExpenseBloc, ExpenseState>(builder: (context, state) {
+      if (state is ExpenseInitial) {
+        context.read<ExpenseBloc>().add(
+              const ReadData(),
+            );
+      }
+      if (state is DisplayAllDatas) {
+        if (state.expenses.isNotEmpty) {
+          return Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: ListView.builder(
+                    itemCount: state.expenses.length,
+                    itemBuilder: (context, index) => ExpenseItemWidget(
+                      expense: state.expenses[index],
+                    ),
+                  ),
+                ),
+              ),
             ),
-          ),
+          );
+        }
+      }
+      return Center(
+        child: Text(
+          'empty'.toUpperCase(),
+          style: const TextStyle(fontSize: 21),
         ),
-      ),
-    );
+      );
+    });
   }
 }
 

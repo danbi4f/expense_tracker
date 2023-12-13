@@ -1,8 +1,13 @@
+import 'package:expense_tracker/expense/data/models/expense_model.dart';
 import 'package:flutter/material.dart';
 
-
 class ExpenseItemWidget extends StatelessWidget {
-  const ExpenseItemWidget({super.key});
+  const ExpenseItemWidget({
+    super.key,
+    required this.expense,
+  });
+
+  final ExpenseModel expense;
 
   @override
   Widget build(BuildContext context) {
@@ -16,21 +21,22 @@ class ExpenseItemWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'name', // expense.name
+              expense.name, // expense.name
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 4),
-            const Row(
+            Row(
               children: [
                 Text(
-                  'price', // expense.price.toStringAsFixed(2)
+                  expense.amount
+                      .toStringAsFixed(2), // expense.price.toStringAsFixed(2)
                 ),
-                Spacer(),
+                const Spacer(),
                 Row(
                   children: [
-                    Icon(Icons.abc), // Icon(categoryIcons[expense.category]),
-                    SizedBox(width: 8),
-                    Text('date'), //expense.formattedDate
+                    const Icon(Icons.abc), // Icon(categoryIcons[expense.category]),
+                    const SizedBox(width: 8),
+                    Text(expense.formattedDate), //expense.formattedDate
                   ],
                 ),
               ],

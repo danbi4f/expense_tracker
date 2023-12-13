@@ -1,5 +1,7 @@
 import 'package:expense_tracker/expense/data/models/expense_model.dart';
+import 'package:expense_tracker/expense/presentation/bloc/expense_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class NewExpense extends StatefulWidget {
   const NewExpense({super.key});
@@ -30,9 +32,11 @@ class _NewExpenseState extends State<NewExpense> {
       firstDate: firstDate,
       lastDate: now,
     );
-    setState(() {
-      selectedDate = pickedDate;
-    });
+    setState(
+      () {
+        selectedDate = pickedDate;
+      },
+    );
   }
 
   void submitExpenseData() {
@@ -57,6 +61,15 @@ class _NewExpenseState extends State<NewExpense> {
       );
       return;
     }
+    context.read<ExpenseBloc>().add(
+          CreateData(
+            expense: ExpenseModel(
+              name: titleController.text,
+              amount: enteredAmount,
+              date: selectedDate!,
+            ),
+          ),
+        );
 
     Navigator.pop(context);
   }
