@@ -1,5 +1,5 @@
-import 'package:expense_tracker/expense/page/modal_scheet_page.dart';
-import 'package:expense_tracker/expense/widgets/expenses_list_widget.dart';
+import 'package:expense_tracker/expense/presentation/page/modal_scheet_page.dart';
+import 'package:expense_tracker/expense/presentation/widgets/expenses_list_widget.dart';
 import 'package:flutter/material.dart';
 
 class ExpensesWidget extends StatelessWidget {

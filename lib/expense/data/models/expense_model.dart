@@ -1,10 +1,10 @@
-import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+
+part 'expense_model.g.dart';
 
 final formatter = DateFormat.yMd();
-
-const uuid = Uuid();
 
 enum Category { food, travel, leisure, work, home }
 
@@ -16,19 +16,21 @@ const categoryIcons = {
   Category.home: Icons.home,
 };
 
-class Expense {
-  Expense({
+@HiveType(typeId: 1)
+class ExpenseModel extends HiveObject {
+  ExpenseModel({
     required this.name,
-    required this.price,
-    required this.category,
+    required this.amount,
     required this.date,
-  }) : id = uuid.v4();
+  });
+  @HiveField(0)
+  String name;
 
-  final String name;
-  final int price;
-  final String id;
-  final Category category;
-  final DateTime date;
+  @HiveField(1)
+  double amount;
+
+  @HiveField(2)
+  DateTime date;
 
   String get formattedDate {
     return formatter.format(date);
