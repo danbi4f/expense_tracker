@@ -9,7 +9,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ExpenseModelAdapter());
-  await Hive.openBox<ExpenseModel>('expenseBox');
+  Box box = await Hive.openBox<ExpenseModel>('expenseBox');
 
   runApp(const MainApp());
   

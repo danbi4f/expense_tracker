@@ -8,39 +8,51 @@ class ExpensesListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ExpenseBloc, ExpenseState>(builder: (context, state) {
-      if (state is ExpenseInitial) {
-        context.read<ExpenseBloc>().add(
-              const ReadData(),
-            );
-      }
-      if (state is DisplayAllDatas) {
-        if (state.expenses.isNotEmpty) {
-          return Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Card(
+    return BlocProvider(
+      create: (context) => ExpenseBloc(),
+      child: BlocBuilder<ExpenseBloc, ExpenseState>(
+        builder: (context, state) {
+          if (state is ExpenseInitial) {
+            context.read<ExpenseBloc>().add(
+                  const ReadData(),
+                );
+          }
+          if (state is DisplayAllDatas) {
+            if (state.expenses.isNotEmpty) {
+              return Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: ListView.builder(
-                    itemCount: state.expenses.length,
-                    itemBuilder: (context, index) => ExpenseItemWidget(
-                      expense: state.expenses[index],
+                  padding: const EdgeInsets.all(5.0),
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: ListView.builder(
+                        itemCount: state.expenses.length,
+                        itemBuilder: (context, index) => ExpenseItemWidget(
+                          expense: state.expenses[index],
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
+              );
+            }
+          }
+          return BlocBuilder<ExpenseBloc, ExpenseState>(
+            builder: (context, state) {
+              if (state is ExpenseInitial) {
+                return Center(
+                  child: Text(
+                    'empty'.toUpperCase(),
+                    style: const TextStyle(fontSize: 21),
+                  ),
+                );
+              }
+              return const Text('error');
+            },
           );
-        }
-      }
-      return Center(
-        child: Text(
-          'empty'.toUpperCase(),
-          style: const TextStyle(fontSize: 21),
-        ),
-      );
-    });
+        },
+      ),
+    );
   }
 }
 

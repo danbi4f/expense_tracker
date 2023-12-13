@@ -59,13 +59,13 @@ class _NewExpenseState extends State<NewExpense> {
           ],
         ),
       );
-      return;
+      
     }
     context.read<ExpenseBloc>().add(
           CreateData(
             expense: ExpenseModel(
               name: titleController.text,
-              amount: enteredAmount,
+              amount: enteredAmount!,
               date: selectedDate!,
             ),
           ),
@@ -76,69 +76,72 @@ class _NewExpenseState extends State<NewExpense> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: double.infinity,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
-        child: Column(
-          children: [
-            TextField(
-              controller: titleController,
-              maxLength: 60,
-              decoration: const InputDecoration(
-                label: Text('Title'),
+    return BlocProvider(
+      create: (context) => ExpenseBloc(),
+      child: SizedBox(
+        height: double.infinity,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
+          child: Column(
+            children: [
+              TextField(
+                controller: titleController,
+                maxLength: 60,
+                decoration: const InputDecoration(
+                  label: Text('Title'),
+                ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: amountController,
-                    decoration: const InputDecoration(
-                      prefixText: '\$',
-                      label: Text('amount'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: amountController,
+                      decoration: const InputDecoration(
+                        prefixText: '\$',
+                        label: Text('amount'),
+                      ),
+                      keyboardType: TextInputType.number,
                     ),
-                    keyboardType: TextInputType.number,
                   ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        selectedDate == null
-                            ? 'No selected'
-                            : formatter.format(selectedDate!),
-                      ),
-                      IconButton(
-                        onPressed: _presentDatePicker,
-                        icon: const Icon(Icons.calendar_month),
-                      ),
-                    ],
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          selectedDate == null
+                              ? 'No selected'
+                              : formatter.format(selectedDate!),
+                        ),
+                        IconButton(
+                          onPressed: _presentDatePicker,
+                          icon: const Icon(Icons.calendar_month),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                const Spacer(),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Cancel'),
-                ),
-                ElevatedButton(
-                  onPressed: submitExpenseData,
-                  child: const Text('Save Expense'),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Cancel'),
+                  ),
+                  ElevatedButton(
+                    onPressed: submitExpenseData,
+                    child: const Text('Save Expense'),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
