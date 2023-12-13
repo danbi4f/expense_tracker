@@ -10,16 +10,17 @@ sealed class ExpenseState extends Equatable {
 final class ExpenseInitial extends ExpenseState {}
 
 class DisplayAllDatas extends ExpenseState {
-  const DisplayAllDatas({required this.transactions});
-  final List<ExpenseModel> transactions;
+  const DisplayAllDatas({required this.expenses});
+  final List<ExpenseModel> expenses;
 
-  List<Object> get props => [transactions];
+@override
+  List<Object> get props => [expenses];
 }
 
 class DisplaySpecificData extends ExpenseState {
-  const DisplaySpecificData({required this.transaction});
-  final ExpenseModel transaction;
+  const DisplaySpecificData({required this.expense});
+  final ExpenseModel expense;
 
   @override
-  List<Object> get props => [transaction];
+  List<Object> get props => [expense];
 }

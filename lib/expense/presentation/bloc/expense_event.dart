@@ -6,8 +6,8 @@ sealed class ExpenseEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
-class FetchAllData extends ExpenseEvent {
-  const FetchAllData();
+class ReadData extends ExpenseEvent {
+  const ReadData();
 
   @override
   List<Object> get props => [];
@@ -15,37 +15,37 @@ class FetchAllData extends ExpenseEvent {
 
 
 
-class AddData extends ExpenseEvent {
-  const AddData({required this.transaction});
+class CreateData extends ExpenseEvent {
+  const CreateData({required this.expense});
 
-  final ExpenseModel transaction;
+  final ExpenseModel expense;
 
   @override
-  List<Object> get props => [transaction];
+  List<Object> get props => [expense];
 }
 
 class DeleteData extends ExpenseEvent {
-  const DeleteData({required this.transaction});
+  const DeleteData({required this.expense});
 
-  final ExpenseModel transaction;
+  final ExpenseModel expense;
 
   @override
-  List<Object> get props => [transaction];
+  List<Object> get props => [expense];
 }
 
 class UpdateData extends ExpenseEvent {
   const UpdateData({
-    required this.transaction,
+    required this.expense,
     required this.name,
     required this.amount,
     required this.date,
   });
 
-  final ExpenseModel transaction;
+  final ExpenseModel expense;
   final String name;
   final double amount;
   final DateTime date;
 
   @override
-  List<Object> get props => [name, amount, date, transaction];
+  List<Object> get props => [name, amount, date, expense];
 }

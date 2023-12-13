@@ -9,25 +9,25 @@ part 'expense_state.dart';
 
 class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
   ExpenseBloc() : super(ExpenseInitial()) {
-    Box<ExpenseModel> boxTransaction;
-    List<ExpenseModel> transactions = [];
-    ExpenseModel? transaction;
-    on<FetchAllData>(
+    Box<ExpenseModel> boxExpense;
+    List<ExpenseModel> expenses = [];
+    ExpenseModel? expense;
+    on<ReadData>(
       (event, emit) {
         try {
-          boxTransaction = Boxes.getTransactions();
-          transactions = boxTransaction.values.toList();
-          emit(DisplayAllDatas(transactions: transactions));
+          boxExpense = Boxes.getExpenses();
+          expenses = boxExpense.values.toList();
+          emit(DisplayAllDatas(expenses: expenses));
         } catch (e) {
           print('$e');
         }
       },
     );
-    on<AddData>(
+    on<CreateData>(
       (event, emit) {
         try {
-          final box = Boxes.getTransactions();
-          box.add(event.transaction);
+          final box = Boxes.getExpenses();
+          box.add(event.expense);
         } catch (e) {
           print('$e');
         }
@@ -36,12 +36,12 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
     on<UpdateData>(
       (event, emit) {
         try {
-          transaction = event.transaction;
-          transaction!.name = event.name;
-          transaction!.amount = event.amount;
-          transaction!.date = event.date;
-          transaction!.save();
-          add(const FetchAllData());
+          expense = event.expense;
+          expense!.name = event.name;
+          expense!.amount = event.amount;
+          expense!.date = event.date;
+          expense!.save();
+          add(const ReadData());
         } catch (e) {
           print('$e');
         }
@@ -50,8 +50,8 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
     on<DeleteData>(
       (event, emit) {
         try {
-          event.transaction.delete();
-          add(const FetchAllData());
+          event.expense.delete();
+          add(const ReadData());
         } catch (e) {
           print('$e');
         }
