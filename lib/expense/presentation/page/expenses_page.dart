@@ -6,6 +6,6 @@ class ExpensesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExpensesWidget();
+    return const ExpensesWidget();
   }
 }

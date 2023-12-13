@@ -1,5 +1,4 @@
 import 'package:expense_tracker/expense/presentation/widgets/new_expense/new_expense.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ModalSheetPage extends StatelessWidget {
@@ -10,7 +9,7 @@ class ModalSheetPage extends StatelessWidget {
     void openExpenseOverlay() {
       showBottomSheet(
         context: context,
-        builder: (context) => NewExpense(),
+        builder: (context) => const NewExpense(),
       );
     }
 
@@ -20,9 +19,3 @@ class ModalSheetPage extends StatelessWidget {
     );
   }
 }
-
-
-/*
-
-
-*/
