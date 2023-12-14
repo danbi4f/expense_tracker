@@ -13,7 +13,7 @@ class ExpensesListWidget extends StatelessWidget {
       child: BlocBuilder<ExpenseBloc, ExpenseState>(
         builder: (context, state) {
           if (state is ExpenseInitial) {
-            context.read<ExpenseBloc>().add(
+            context.watch<ExpenseBloc>().add(
                   const ReadData(),
                 );
           }

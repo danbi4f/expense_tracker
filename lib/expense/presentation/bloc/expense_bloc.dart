@@ -1,4 +1,3 @@
-import 'package:expense_tracker/expense/data/datasource/local_db_boxes.dart';
 import 'package:expense_tracker/expense/data/models/expense_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -9,14 +8,14 @@ part 'expense_state.dart';
 
 class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
   ExpenseBloc() : super(ExpenseInitial()) {
-    Box<ExpenseModel> boxExpense;
+   
     List<ExpenseModel> expenses = [];
     ExpenseModel? expense;
     on<ReadData>(
-      (event, emit) {
+      (event, emit) async {
         try {
-          boxExpense = Boxes.getExpenses();
-          expenses = boxExpense.values.toList();
+          final box = await Hive.openBox<ExpenseModel>('expenseBox');
+          expenses = box.values.toList();
           emit(DisplayAllDatas(expenses: expenses));
         } catch (e) {
           print('$e');
@@ -24,9 +23,9 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
       },
     );
     on<CreateData>(
-      (event, emit) {
+      (event, emit) async {
         try {
-          final box = Boxes.getExpenses();
+          final box = await Hive.openBox<ExpenseModel>('expenseBox');
           box.add(event.expense);
         } catch (e) {
           print('$e');
@@ -48,9 +47,12 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
       },
     );
     on<DeleteData>(
-      (event, emit) {
+      (event, emit) async {
         try {
-          event.expense.delete();
+          final box = await Hive.openBox<ExpenseModel>('expenseBox');
+          // box.add(event.expense);
+         event.expense.delete();
+          box.clear();
           add(const ReadData());
         } catch (e) {
           print('$e');

@@ -17,10 +17,3 @@ class DisplayAllDatas extends ExpenseState {
   List<Object> get props => [expenses];
 }
 
-class DisplaySpecificData extends ExpenseState {
-  const DisplaySpecificData({required this.expense});
-  final ExpenseModel expense;
-
-  @override
-  List<Object> get props => [expense];
-}

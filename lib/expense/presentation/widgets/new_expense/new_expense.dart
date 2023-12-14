@@ -59,7 +59,6 @@ class _NewExpenseState extends State<NewExpense> {
           ],
         ),
       );
-      
     }
     context.read<ExpenseBloc>().add(
           CreateData(
