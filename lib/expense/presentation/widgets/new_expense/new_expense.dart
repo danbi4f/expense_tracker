@@ -1,5 +1,7 @@
+import 'package:expense_tracker/config/theme.dart';
 import 'package:expense_tracker/expense/data/models/expense_model.dart';
 import 'package:expense_tracker/expense/presentation/bloc/expense_bloc.dart';
+import 'package:expense_tracker/expense/presentation/widgets/expenses_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -69,8 +71,19 @@ class _NewExpenseState extends State<NewExpense> {
             ),
           ),
         );
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      backgroundColor: theme.primaryColor,
+      duration: const Duration(seconds: 1),
+      content: const Text("added successfully"),
+    ));
+    titleController.clear();
+    amountController.clear();
 
-    Navigator.pop(context);
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const ExpensesWidget(),
+      ),
+    );
   }
 
   @override
