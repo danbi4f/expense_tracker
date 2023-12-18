@@ -2,6 +2,7 @@ import 'package:expense_tracker/config/theme.dart';
 import 'package:expense_tracker/expense/data/models/expense_model.dart';
 import 'package:expense_tracker/expense/presentation/bloc/expense_bloc.dart';
 import 'package:expense_tracker/expense/presentation/widgets/expenses_widget.dart';
+import 'package:expense_tracker/expense/presentation/widgets/new_expense/button_expense.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -41,50 +42,6 @@ class _NewExpenseState extends State<NewExpense> {
     );
   }
 
-  void submitExpenseData() {
-    final enteredAmount = double.tryParse(amountController.text);
-    final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
-    if (titleController.text.trim().isEmpty ||
-        amountIsInvalid ||
-        selectedDate == null) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Invalid input'),
-          content: const Text('check all fields'),
-          actions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('okay'))
-          ],
-        ),
-      );
-    }
-    context.read<ExpenseBloc>().add(
-          CreateData(
-            expense: ExpenseModel(
-              name: titleController.text,
-              amount: enteredAmount!,
-              date: selectedDate!,
-            ),
-          ),
-        );
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: theme.primaryColor,
-      duration: const Duration(seconds: 1),
-      content: const Text("added successfully"),
-    ));
-    titleController.clear();
-    amountController.clear();
-
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const ExpensesWidget(),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -146,10 +103,12 @@ class _NewExpenseState extends State<NewExpense> {
                     },
                     child: const Text('Cancel'),
                   ),
-                  ElevatedButton(
-                    onPressed: submitExpenseData,
-                    child: const Text('Save Expense'),
-                  ),
+                  ButtonExpense(
+                    titleController: titleController,
+                    amountController: amountController,
+                    context: context,
+                    selectedDate: selectedDate,
+                  )
                 ],
               ),
             ],
