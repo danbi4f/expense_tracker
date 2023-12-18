@@ -20,9 +20,18 @@ class ExpenseItemWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              expense.name, // expense.name
-              style: Theme.of(context).textTheme.titleLarge,
+            Row(
+              children: [
+                Text(
+                  expense.name, // expense.name
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const Spacer(),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.edit),
+                ),
+              ],
             ),
             const SizedBox(height: 4),
             Row(
@@ -34,7 +43,8 @@ class ExpenseItemWidget extends StatelessWidget {
                 const Spacer(),
                 Row(
                   children: [
-                    const Icon(Icons.abc), // Icon(categoryIcons[expense.category]),
+                    const Icon(
+                        Icons.abc), // Icon(categoryIcons[expense.category]),
                     const SizedBox(width: 8),
                     Text(expense.formattedDate), //expense.formattedDate
                   ],

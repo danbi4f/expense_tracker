@@ -4,7 +4,6 @@ var kColorSchame = ColorScheme.fromSeed(
   seedColor: const Color.fromARGB(255, 96, 59, 181),
 );
 
-
 var theme = ThemeData().copyWith(
   colorScheme: kColorSchame,
   appBarTheme: const AppBarTheme().copyWith(
@@ -12,3 +11,5 @@ var theme = ThemeData().copyWith(
     foregroundColor: kColorSchame.primaryContainer,
   ),
 );
+
+

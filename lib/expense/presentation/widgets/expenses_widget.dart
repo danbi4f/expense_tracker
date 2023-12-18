@@ -1,10 +1,9 @@
-import 'package:expense_tracker/expense/data/models/expense_model.dart';
 import 'package:expense_tracker/expense/presentation/bloc/expense_bloc.dart';
 import 'package:expense_tracker/expense/presentation/page/modal_scheet_page.dart';
 import 'package:expense_tracker/expense/presentation/widgets/expenses_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
+
 
 class ExpensesWidget extends StatefulWidget {
   const ExpensesWidget({super.key});

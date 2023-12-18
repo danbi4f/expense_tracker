@@ -8,7 +8,6 @@ part 'expense_state.dart';
 
 class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
   ExpenseBloc() : super(ExpenseInitial()) {
-   
     List<ExpenseModel> expenses = [];
     ExpenseModel? expense;
     on<ReadData>(
@@ -27,6 +26,7 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
         try {
           final box = await Hive.openBox<ExpenseModel>('expenseBox');
           box.add(event.expense);
+          box.close();
         } catch (e) {
           print('$e');
         }
@@ -50,8 +50,6 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
       (event, emit) async {
         try {
           final box = await Hive.openBox<ExpenseModel>('expenseBox');
-          // box.add(event.expense);
-         event.expense.delete();
           box.clear();
           add(const ReadData());
         } catch (e) {
